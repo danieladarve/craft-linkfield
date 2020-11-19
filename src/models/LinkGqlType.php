@@ -3,7 +3,8 @@
 namespace lenz\linkfield\models;
 
 use craft\gql\GqlEntityRegistry;
-use craft\gql\interfaces\Element;
+use craft\gql\interfaces\Element as ElementInterface;
+use craft\gql\resolvers\Element as ElementResolver;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -15,14 +16,16 @@ class LinkGqlType
   /**
    * @return string
    */
-  static public function getName(): string {
+  static public function getName(): string
+  {
     return 'linkField_Link';
   }
 
   /**
    * @return Type
    */
-  static public function getType() {
+  static public function getType()
+  {
     if ($type = GqlEntityRegistry::getEntity(self::class)) {
       return $type;
     }
@@ -35,9 +38,10 @@ class LinkGqlType
   }
 
   /**
-   * @rejturn array
+   * @return array
    */
-  public static function getFieldDefinitions(): array {
+  public static function getFieldDefinitions(): array
+  {
     return [
       'ariaLabel' => [
         'name' => 'ariaLabel',
@@ -47,10 +51,11 @@ class LinkGqlType
         'name' => 'customText',
         'type' => Type::string(),
       ],
-      'element' => [
-        'name' => 'element',
-        'type' => Element::getType(),
-      ],
+      // 'linkElement' => [
+      //   'name' => 'linkElement',
+      //   'type' => ElementInterface::getType(),
+      //   'resolve' => ElementResolver::class . '::resolve',
+      // ],
       'target' => [
         'name' => 'target',
         'type' => Type::string(),
